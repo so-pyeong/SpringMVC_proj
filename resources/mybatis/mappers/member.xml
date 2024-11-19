@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+    <resultMap id="memberResult" type="memberVO">
+        <result property="id" column="id" />
+        <result property="pwd" column="pwd" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="joinDate" column="joinDate" />
+    </resultMap>
+
+    <select id="selectAllMemberList" resultMap="memberResult">
+        select * from tbl_member order by joinDate desc
+    </select>
+
+    <insert id="insertMember" parameterType="memberVO">
+        insert into tbl_member(id, pwd, name, email)
+        values (#{id}, #{pwd}, #{name}, #{email})
+    </insert>
+
+    <update id="updateMember" parameterType="memberVO">
+        update tbl_member
+        set pwd=#{pwd}, name=#{name}, email=#{email}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteMember" parameterType="String">
+        delete from tbl_member where id=#{id}
+    </delete>
+
+    <select id="selectMember" resultType="memberVO" parameterType="String">
+        select * from tbl_member where id=#{id}
+    </select>
+
+    <select id="loginById" resultType="memberVO" parameterType="memberVO">
+        select * from tbl_member
+        where id = #{id} and pwd = #{pwd}
+    </select>
+
+</mapper>

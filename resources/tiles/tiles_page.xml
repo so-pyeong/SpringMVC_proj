@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions
+        PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+    <definition name="baseLayout" template="/WEB-INF/views/home/layout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/views/home/header.jsp"/>
+        <put-attribute name="side" value="/WEB-INF/views/home/side.jsp"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/views/home/footer.jsp"/>
+    </definition>
+
+    <definition name="/board/listArticles" extends="baseLayout">
+        <put-attribute name="title" value="AISW Board"/>
+        <put-attribute name="body" value="/WEB-INF/views/board/listArticles.jsp"/>
+    </definition>
+
+    <definition name="/board/viewArticle" extends="baseLayout">
+        <put-attribute name="title" value="상세글 보기"/>
+        <put-attribute name="body" value="/WEB-INF/views/board/viewArticle.jsp"/>
+    </definition>
+
+    <definition name="/board/boardForm" extends="baseLayout">
+        <put-attribute name="title" value="새글 작성"/>
+        <put-attribute name="body" value="/WEB-INF/views/board/boardForm.jsp"/>
+    </definition>
+
+    <definition name="/member/listMembers" extends="baseLayout">
+        <put-attribute name="title" value="회원 관리"/>
+        <put-attribute name="body" value="/WEB-INF/views/member/listMembers.jsp"/>
+    </definition>
+
+    <definition name="/member/loginForm" extends="baseLayout">
+        <put-attribute name="title" value="로그인폼"/>
+        <put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp"/>
+    </definition>
+
+    <definition name="/member/registerForm" extends="baseLayout">
+        <put-attribute name="title" value="회원가입폼"/>
+        <put-attribute name="body" value="/WEB-INF/views/member/registerForm.jsp"/>
+    </definition>
+
+    <!-- Nav Static Pages -->
+    <definition name="/static_pages/main" extends="baseLayout">
+        <put-attribute name="title" value="AISW Home"/>
+        <put-attribute name="body" value="/WEB-INF/views/static_pages/main.jsp"/>
+    </definition>
+
+</tiles-definitions>

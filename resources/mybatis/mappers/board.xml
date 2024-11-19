@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+    <resultMap id="boardResult" type="BoardVO">
+        <result property="articleNO" column="articleNO" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="writeDate" column="writeDate" />
+    </resultMap>
+
+    <select id="selectAllArticlesList" resultMap="boardResult">
+        <![CDATA[
+            select * from tbl_board order by writeDate desc
+        ]]>
+    </select>
+
+    <insert id="insertArticle" parameterType="map">
+        <![CDATA[
+            insert into tbl_board(articleNO, title, content, writeDate, writer)
+            values (#{articleNO}, #{title}, #{content}, sysdate, #{writer})
+        ]]>
+    </insert>
+
+    <delete id="deleteArticle" parameterType="String">
+        <![CDATA[
+            delete from tbl_board where articleNO=#{articleNO}
+        ]]>
+    </delete>
+
+    <select id="articleView" resultType="boardVO" parameterType="String">
+        <![CDATA[
+            select * from tbl_board where articleNO=#{articleNO}
+        ]]>
+    </select>
+
+    <select id="getMaxArticleNO" resultType="int">
+        <![CDATA[
+            select max(articleNO) from tbl_board
+        ]]>
+    </select>
+
+    <update id="updateArticle" parameterType="map">
+        <![CDATA[
+            update tbl_board
+            set title=#{title}, content=#{content}
+            where articleNO=#{articleNO}
+        ]]>
+    </update>
+
+    <!-- board 테이블 변경사항 적용 -->
+    <select id="selectHitCnt" resultType="boardVO" parameterType="String">
+        select articleNO, hitCnt from tbl_board where articleNO=#{articleNO}
+    </select>
+
+    <update id="updateHitCnt" parameterType="boardVO">
+        update tbl_board set hitCnt=#{hitCnt} where articleNO=#{articleNO}
+    </update>
+
+    <!-- 파일 업로드 -->
+    <insert id="insertFile" parameterType="hashmap">
+        insert into tbl_file(boardNO, originalFileName, storedFileName, fileSize, memberID)
+        values (#{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, 'ADMIN')
+    </insert>
+
+    <!-- 파일 다운로드 -->
+    <select id="selectFileList" parameterType="String" resultType="hashmap">
+        select idx, originalFileName, round(fileSize / 1024) as file_size
+        from tbl_file
+        where boardNO=#{articleNO} and deleteCHK='N'
+    </select>
+
+</mapper>
